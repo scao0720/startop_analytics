@@ -42,18 +42,17 @@
 <script>
     $("#newbullet").submit(function () {
         ga('send', 'event', 'button', 'click', 'add bullet');
-    });
-    $("#newbullet").ajax({
-        type: "POST",
-        url: "${pageContext.request.contextPath}/bullets",
-        data: $("#newbullet").serialize(),
-        success: function(data) {
-            $('#bulletslist').append(
+        $.ajax({
+            type: "POST",
+            url: "${pageContext.request.contextPath}/bullets",
+            data: $("#newbullet").serialize(),
+            success: function(data) {
+                $('#bulletslist').append(
                     '<dt>' + (new Date()) + '</dt>',
                     '<dd>' + $("#bullet_text").value + '</dd>'),
-        };
-    });
-    event.preventDefault();
+                    };
+                });
+        event.preventDefault();
     $("#endsession").submit(function () {
         ga('send', 'event', 'button', 'click', 'end session');
     });
