@@ -40,21 +40,21 @@
 </dl>
 <a href="${pageContext.request.contextPath}/">Go back</a> | <a href="${pageContext.request.contextPath}/confirm?id=${session.id}">Delete session</a>
 <script>
-    $("#newbullet").submit(function (event) {
+    $("#newbullet").submit(function(event) {
     ga('send', 'event', 'button', 'click', 'add bullet');
             $.ajax({
             type: "POST",
                     url: "${pageContext.request.contextPath}/bullets",
                     data: $("#newbullet").serialize(),
-                    success: function (data) {
+                    success: function(data) {
                     $('#bulletslist').append(
                             '<dt>' + (new Date()) + '</dt>',
                             '<dd>' + $("#bullet_text").value + '</dd>'),
                     };
             });
             event.preventDefault();
-            )
-    $("#endsession").submit(function () {
+            });
+    $("#endsession").submit(function() {
     ga('send', 'event', 'button', 'click', 'end session');
     });
 </script>
