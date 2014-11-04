@@ -12,12 +12,12 @@
 </ul>
 
 <c:if test="${session.stop == null}">
-  <strong>Add notes</strong>
-    <form action="${pageContext.request.contextPath}/bullets" method="post">
+    <strong>Add notes</strong>
+    <form id="newbullet" action="${pageContext.request.contextPath}/bullets" method="post">
         <input type="hidden" name="session_id" value="${session.id}"/>
         <table border="0">
             <tr>
-                <td><textarea name="body" rows="1" cols="20"></textarea></td>
+                <td><textarea id="bullet_text" name="body" rows="1" cols="20"></textarea></td>
             </tr>
         </table>
         <div>
@@ -25,17 +25,36 @@
         </div>
     </form>
     <br>
-    <form action="${pageContext.request.contextPath}/finish" method="post">
+    <form id="endsession" action="${pageContext.request.contextPath}/finish" method="post">
         <input type="hidden" name="id" value="${session.id}"/>
         <input type="submit" value="Stop session" />
     </form>
 </c:if>
 <!--Bullet stuff -->
 <br>
-<dl class="dl-horizontal">
+<dl id="bulletslist" class="dl-horizontal">
     <c:forEach var="bullet" items="${bullets}">
         <dt><b><fmt:formatDate value="${bullet.created}" pattern="HH:mm:ss" />:</b></dt>
         <dd><c:out value="${bullet.body}" /></dd>
     </c:forEach>
 </dl>
 <a href="${pageContext.request.contextPath}/">Go back</a> | <a href="${pageContext.request.contextPath}/confirm?id=${session.id}">Delete session</a>
+<script>
+    $("#newbullet").submit(function () {
+        ga('send', 'event', 'button', 'click', 'add bullet');
+    });
+    $("#newbullet").ajax({
+        type: "POST",
+        url: "${pageContext.request.contextPath}/bullets",
+        data: $("#newbullet").serialize(),
+        success: function(data) {
+            $('#bulletslist').append(
+                    '<dt>' + (new Date()) + '</dt>',
+                    '<dd>' + $("#bullet_text").value + '</dd>'),
+        };
+    });
+    event.preventDefault();
+    $("#endsession").submit(function () {
+        ga('send', 'event', 'button', 'click', 'end session');
+    });
+</script>

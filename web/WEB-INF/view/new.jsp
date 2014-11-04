@@ -5,7 +5,7 @@
 --%>
 
 <h2>Name your new session</h2>
-<form action="${pageContext.request.contextPath}/create" method="post">
+<form id="newsession" action="${pageContext.request.contextPath}/create" method="post">
     <table border="0">
         <tr>
             <td><textarea name="name" rows="1" cols="20"></textarea></td>
@@ -17,3 +17,8 @@
 </form>
 <br>
 <p><a href="/">Go back</a></p>
+<script>
+    $("#newsession").submit(function () {
+        ga('send', 'event', 'button', 'click', 'create session');
+    })
+</script>
