@@ -43,7 +43,8 @@
     $("#newbullet").submit(function(event){
     ga('send', 'event', 'button', 'click', 'add bullet');
     var now = new Date();
-    var time = ("0" + now.getHours()).slice(-2) + ":" + ("0" + now.getMinutes()).slice(-2) + ":" + ("0" + now.getSeconds()).slice(-2)
+    var time = ("0" + now.getHours()).slice(-2) + ":" + ("0" + now.getMinutes()).slice(-2) + ":" + ("0" + now.getSeconds()).slice(-2);
+    var bulletbullet = $("#bullet_text").val()
             $.ajax({
             type: "POST",
                     url: "${pageContext.request.contextPath}/bullets",
@@ -51,10 +52,10 @@
                     success: function(data){
                     $('#bulletslist').append(
                             '<dt>' + time + ':</dt>',
-                            '<dd>' + $("#bullet_text").val() + '</dd>');
+                            '<dd>' + bulletbullet + '</dd>');
                     }
             });
-            $("#newbullet").val("");
+            $("#bullet_text").val("");
             event.preventDefault();
             });
     $("#endsession").submit(function(){
